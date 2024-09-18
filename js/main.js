@@ -143,15 +143,19 @@ const mobileUsersChart = new Chart(document.getElementById('mobileUsersChart'), 
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'bottom'
+                position: 'right', // Mută legenda în dreapta
+                align: 'center',   // Aliniază etichetele la centru
+                labels: {
+                    boxWidth: 20,  // Dimensiunea pătrățelului de culoare lângă etichete
+                    padding: 20,   // Spațiu între etichete
+                }
             }
         }
     }
 });
 
-
 // Sample notifications
-const notifications = [
+let notifications = [
     { id: 1, message: "You have 6 unread messages" },
     { id: 2, message: "You have 3 new followers" }
 ];
@@ -179,7 +183,6 @@ function renderNotifications() {
 
         notificationList.appendChild(notificationItem);
     });
-
     updateBellIcon();
 }
 
@@ -196,20 +199,58 @@ function removeNotification(id) {
 function updateBellIcon() {
     const bellIcon = document.querySelector('.bell-icon');
     const badge = document.querySelector('.badge');
+    const notificationList = document.getElementById('notificationList');
     if (notifications.length === 0) {
+        notificationList.style.display='none';
         badge.style.display = 'none'; // Hide the green dot
     } else {
         badge.style.display = 'block'; // Show the green dot
     }
 }
-
 // Event listener for the bell icon click
 document.querySelector('.bell-icon').addEventListener('click', () => {
     const notificationList = document.getElementById('notificationList');
-    notificationList.style.display = 'block'; // Show the notifications
+    
+    // Toggle visibility of notifications
+    if (notificationList.style.display === 'block') {
+        notificationList.style.display = 'none'; // Hide the notifications
+    } else {
+        notificationList.style.display = 'block'; // Show the notifications
+    }
 });
 
 // Initially render the notifications
 renderNotifications();
 
+document.getElementById("messageForm").addEventListener("submit", function(event) {
+    event.preventDefault();
 
+    const user = document.getElementById("searchUser").value.trim();
+    const message = document.getElementById("messageTextarea").value.trim();
+
+    const userError = document.getElementById("userError");
+    const messageError = document.getElementById("messageError");
+
+    const confirmationMessage = document.getElementById("confirmationMessage");
+
+    let isValid = true;
+    if (user === "") {
+        userError.style.display = "block"; // Show the error message
+        isValid = false;
+    } else {
+        userError.style.display = "none"; // Hide the error message
+    }
+    if (message === "") {
+        messageError.style.display = "block"; // Show the error message
+        isValid = false;
+    } else {
+        messageError.style.display = "none"; // Hide the error message
+    }
+    if (isValid) {
+        confirmationMessage.style.display = "block";
+        setTimeout(() => {
+            confirmationMessage.style.display = "none";
+        }, 3000);
+        document.getElementById("messageForm").reset();
+    }
+});

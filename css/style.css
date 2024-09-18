@@ -1,54 +1,65 @@
-@charset "UTF-8";
-
 /* Global styles */
 * {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
     font-family: 'Martel Sans', sans-serif;
 }
 
-.main{
-    background-color: white;
+body {
+    display: grid;
+    grid-template-columns: 50px auto;
+    /* Reduce nav width */
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "header header "
+        "nav nav"
+        "main main";
+    height: 100vh;
+    margin: 0;
 }
 
-.dashboard-header {
-    display: inline-block;
-    background-color: #ececec; 
-    color: black; /* Text alb */
-    text-align: left; /* Aliniază textul la centru */
-    font-size: 10px;
-    margin-top: 0;
-    margin-left: 0;
+nav {
+    grid-area: nav;
+    background-color: #414177;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 20px;
 }
 
+main {
+    grid-area: main;
+    background-color: #f4f4f4;
+    overflow-y: auto;
+}
 
-/* Header */
 header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
     background-color: #6f6fd3;
     grid-column: 1 / -1;
 }
 
 .logo {
-	color: whitesmoke;
-	font-size: 24px;
+    color: whitesmoke;
+    font-size: 24px;
 }
 
 .header-right {
     display: flex;
     align-items: center;
-    gap: 20px; /* Distanță între notificare și profil */
+    gap: 20px;
+    /* Space between notification and profile */
 }
-/* Notification  */
+
 .notification {
     display: flex;
     align-items: center;
     position: relative;
-    padding-right: 20px; /* Spațiu pentru linia separatoare */
+    padding-right: 20px;
 }
 
 .notification::after {
@@ -57,185 +68,355 @@ header {
     right: 0;
     width: 1px;
     height: 40px;
-    background-color: white; /* Linia verticală între notification și profile */
+    background-color: white;
 }
 
-.notification img {
-    width: 24px; /* Ajustează dimensiunea iconiței */
-    height: 24px;
-}
-
-/* Styling for the bell icon */
-.bell-icon {
+.notification svg {
     width: 24px;
     height: 24px;
     cursor: pointer;
-    transition: transform 0.3s ease, color 0.3s ease; /* Adding smooth transition for transform and color */
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.bell-icon:hover {
-    transform: scale(1.2) rotate(15deg); /* Scale up and rotate the bell on hover */
+.notification svg:hover {
+    transform: scale(1.2) rotate(15deg);
     color: #fff;
 }
 
 .notification:hover .badge {
-    animation: pulse 1s infinite; /* Pulse animation for the badge */
+    animation: pulse 1s infinite;
 }
+
+/* Style to position notification list below the header */
 .notification-list {
     position: absolute;
     top: 50px;
     right: 10px;
     background-color: white;
-    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 10px;
     width: 250px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    /* Hidden by default */
 }
 
 .notification-item {
-    padding: 10px;
     display: flex;
     justify-content: space-between;
+    padding: 10px;
     border-bottom: 1px solid #eee;
 }
 
-.close-btn {
-    background: none;
-    border: none;
-    color: red;
-    cursor: pointer;
+.notification-item:last-child {
+    border-bottom: none;
+    /* No border for the last item */
 }
 
+.notification-item .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: red;
+}
+
+.notification-list .alert-close {
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: auto;
+}
+
+
+/* Badge (Green dot) */
 .badge {
-    position: absolute;
-    top: 5px;
-    right: 5px;
     background-color: green;
     width: 10px;
     height: 10px;
     border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left:15px;
+    transform: translate(50%, -50%);
+    display: block;
 }
 
-/* Keyframes for badge pulse animation */
 @keyframes pulse {
     0% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.5);
     }
+
     100% {
         transform: scale(1);
     }
 }
 
 .profile {
-	display: flex;
-	align-items: center;
-	color: whitesmoke;
-	font-size: 14px;
+    display: flex;
+    align-items: center;
+    color: whitesmoke;
+    font-size: 14px;
 }
 
 .profile img {
-	border-radius: 50%;
-	width: 40px;
-	height: 40px;
-	margin-right: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
 }
 
-/* Layout grid general */
-body {
-    display: grid;
-    grid-template-columns: 70px auto; /* Bara de navigare pe 70px, restul pentru conținut */
-    grid-template-rows: auto 1fr;
-    grid-template-areas: 
-        "header header"
-        "nav main";
-    height: 100vh; /* Înălțimea completă a viewportului */
-    margin: 0;
-}
-
-/* Navigation bar */
-nav {
-    grid-area: nav;
-    background-color: #414177;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    height: 100vh; /* Face bara laterală să se întindă pe toată înălțimea paginii */
-}
 
 nav ul {
+    display: flex;
+    /* Schimbat la layout pe orizontală */
+    justify-content: space-around;
+    width: 100%;
     list-style-type: none;
     padding: 0;
     margin: 0;
-    width: 100%;
 }
 
 nav ul li {
-    margin-bottom: 20px;
+    margin-bottom: 0;
+    /* Eliminat spațiul vertical */
     text-align: center;
 }
 
-nav ul li img {
-    width: 30px;
-    height: 30px;
+nav ul li svg {
+    width: 40px;
+    /* Ajustat la dimensiuni mai mici */
+    height: 40px;
+}
+
+/* Widgets and Sections */
+
+
+.dashboard-content {
+    width: 100%;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr;
+    background-color: white;
+}
+
+/* Dashboard header styles */
+.dashboard-header {
+    display: flex;
+    flex:1;
+    align-items: center;
+    background-color: #e0e0e0; /* Light gray for the background */
+    padding: 0; /* Remove any padding */
+    margin: 0; /* Ensure it's attached to other elements */
+    grid-area: header; /* Ensures it's in the header grid area */
+}
+
+/* White background just for the text "Dashboard" */
+.dashboard-header h1 {
+    display: inline-block;
+    background-color: white; /* White background for the text */
+    padding: 10px 20px; /* Add padding around the text */
+    margin: 0; /* No margin */
+    font-size: 24px; /* Adjust font size as needed */
+    font-weight: bold; /* Make the text bold */
+    border-radius: 5px 5px 0 0; /* Slight rounding on the top corners */
+}
+
+
+/* Alert */
+.alert {
+    grid-column: 1/ -1;
+    display: flex;
+    width: 100%;
+    background-color: #8282ee;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.alert-close {
+    margin-left: auto;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0 10px;
+    line-height: 20px;
+}
+
+.alert-close:hover {
+    color: #d1d1d1;
+}
+
+/* Traffic Widget */
+.traffic-widget {
+    grid-column: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+
+
+
+.traffic-widget h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.traffic-chart {
+    width: 100%;
+}
+
+.time-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.time-buttons button {
+    color: black;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.time-buttons button:hover,
+.time-buttons button:focus {
+    background-color: #45a049;
+}
+
+/* Daily Traffic */
+.daily-traffic {
+    height: 300px;
+}
+
+.daily-traffic h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.daily-traffic canvas {
+    width: 100%;
+    height: 190px;
+}
+
+/* Mobile Users */
+.mobile-users {
+    height: 300px;
+}
+
+.mobile-users h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.mobile-users canvas{
+    height: 190px;
+}
+
+/* Social Stats Section */
+.social-stats {
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.social-stats h2 {
+    grid-column: 1 / -1;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.social-box {
+    display: flex;
+    align-items: left;
+    flex:1;
+    justify-content: center;
+    font-size: 18px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.social-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.social-name {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.followers-count {
+    font-size: 34px;
+    color: #8282ee;
+}
+.icon-circle {
+    width: 50px; /* Setează dimensiunea cercului */
+    height: 50px; /* Setează dimensiunea cercului */
+    background-color: #414177; /* Fundalul cercului (opțional) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; /* Face containerul rotund */
+}
+
+.icon-circle svg {
+    width: 24px; /* Dimensiunea SVG-ului */
+    height: 24px; /* Dimensiunea SVG-ului */
+    fill: white; /* Culoarea SVG-ului (poate fi modificată) */
 }
 
 /* New Members Section */
-.new-members {
-    background-color: #ececec;
-    padding: 20px;
-}
-
 .new-members h2 {
     font-size: 18px;
     margin-bottom: 20px;
 }
 
 .new-members ul {
-    display: flex;
-    flex-direction: column;
-    height:100%;
     list-style: none;
     padding: 0;
-    margin: 0;
 }
 
 .new-members ul li {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    /* Schimbat la stivuire pe verticală */
     align-items: center;
-    flex-grow:1;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
+    justify-content: center;
+    text-align: center;
     border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
 }
 
-.new-members ul li:last-child {
-    border-bottom: none;
-}
 
 .new-members img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin-right: 15px;
+    margin-bottom: 10px;
 }
 
 .member-details {
     flex-grow: 1;
+    text-align: center;
+    /* Aliniere centrală */
 }
 
 .member-name {
     font-weight: bold;
-    color: #333;
     font-size: 14px;
+    color: #333;
 }
 
 .member-email {
-    display: block;
     font-size: 12px;
     color: #8282ee;
     text-decoration: none;
@@ -248,219 +429,211 @@ nav ul li img {
 .member-date {
     font-size: 12px;
     color: #999;
+    margin-top: 5px;
+    /* Spațiu suplimentar */
 }
 
+/* Recent Activity Section */
 
-/* Restul conținutului */
-main {
-    grid-area: main;
-    padding: 20px;
+.recent-activity h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.recent-activity ul {
+    list-style: none;
+    padding: 0;
+}
+
+.recent-activity ul li {
+    display: flex;
+    flex-direction: column;
+    /* Schimbat la stivuire pe verticală */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.recent-activity img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.activity-details {
+    flex-grow: 1;
+    text-align: center;
+    /* Aliniere centrală */
+}
+
+.activity-member {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.activity-action {
+    font-size: 12px;
+    color: #666;
+}
+
+.activity-topic {
+    font-weight: bold;
+    font-size: 14px;
+    color: #8282ee;
+}
+
+.activity-time {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    /* Spațiu suplimentar */
+}
+
+/* Hover effect for recent activity */
+.recent-activity ul li:hover {
     background-color: #f4f4f4;
-    overflow-y: auto; /* Adaugă scroll pentru conținut dacă depășește înălțimea paginii */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-/* Containerul pentru widgeturi */
-.dashboard-content {
-    grid-gap: 10px;
-    background-color: white;
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Două coloane pentru conținutul principal */
+/* Settings Section */
+.settings h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
 }
 
-
-/* Altele (cum ar fi stiluri pentru alertă, grafice, etc.) */
-.alert {
+.settings label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 18px;
     width: 100%;
-    grid-column: 1 / -1;
-    background-color: #8282ee;
-    color: white;
+}
+
+.settings label span {
+    margin-left: 10px;
+    /* Add space between switch and text */
+}
+
+.settings select {
+    width: 100%;
     padding: 10px;
     border-radius: 5px;
-    text-align: left;
+    border: 1px solid lightgrey;
     font-size: 16px;
 }
 
-/* Close button for the alert */
-.alert-close {
+.container {
+    position: relative;
+    width: 60px;
+    height: 34px;
+}
+
+.container input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    width: 60px;
+    position: absolute;
     cursor: pointer;
-    font-size: 20px;
-    padding: 0 10px;
-    line-height: 20px;
-}
-
-.alert-close:hover {
-    color: #d1d1d1;
-}
-
-/* Traffic Widget */
-.traffic-widget h2 {
-	font-size: 20px;
-	margin-bottom: 15px;
-}
-
-.traffic-chart {
-	width: 100%;
-}
-
-.chart-container {
-    position: relative; /* Asigură-te că butoanele pot fi poziționate relativ la acest container */
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.time-buttons {
-    position: absolute; /* Permite poziționarea exactă în container */
-    display: flex;
-}
-
-.time-buttons button {
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.time-buttons button:hover {
-    background-color: #45a049;
-}
-
-#trafficChart {
-    width: 100%;
-    height: 400px; /* Ajustează înălțimea graficului */
-}
-
-/* Traffic Widget */
-.traffic-widget {
-    position: relative; /* Asigură-te că butoanele pot fi poziționate relativ la acest container */
-    width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    grid-column: 1 / -1;
-    background-color: #ececec;
-
-}
-
-.time-buttons {
-    position: absolute; /* Permite poziționarea exactă în widget */
-    top: 10px; /* Poziționează butoanele la 10px de partea de sus a widget-ului */
-    right: 10px; /* Poziționează butoanele la 10px de partea dreaptă a widget-ului */
-    display: flex;
-    gap: 10px; /* Spațiu între butoane */
-}
-
-.time-buttons button {
-    color: black;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-
-.time-buttons button:hover {
-    background-color: #45a049;
-}
-.time-buttons button:focus {
-    background-color: #45a049;
-}
-
-
-/* Daily Traffic */
-.daily-traffic {
-    height:100%;
-    overflow:scroll;
-	background-color: #ececec;
-	padding: 20px;
-    height: 300px;
-}
-
-.daily-traffic canvas {
-    width: 100%; /* Keep full width to match the container */
-    height: 200px; /* Adjust the height to make the chart smaller */
-}
-
-.daily-traffic h2 {
-	font-size: 20px;
-	margin-bottom: 15px;
-}
-
-/* Mobile Users */
-.mobile-users {
-    width: 100%;
-	background-color: #ececec;
-	padding: 20px;
-    height: 300px;
-}
-
-.mobile-users h2 {
-	font-size: 20px;
-	margin-bottom: 15px;
-}
-
-/* Social Stats Section */
-.social-stats {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
-    gap: 20px; /* Space between the columns */
-    background-color: #ececec;
-    padding: 20px;
-    grid-column: 1 / -1; /* Spans the full width of the page */
-}
-
-.social-stats h2 {
-    grid-column: 1 / -1; /* Makes the heading span all three columns */
-    font-size: 20px;
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.social-box {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    padding: 10px;
-    background-color: white; /* Adds a background color */
-    border-radius: 5px;
-}
-
-.social-box img {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-}
-
-/* Stilul pentru textul de lângă logo */
-.social-text {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Numele rețelei sociale (Facebook, Instagram, Twitter) */
-.social-name {
-    font-weight: bold;
+    color: white;
     font-size: 14px;
-    color: #333; /* Culoare mai închisă pentru titlu */
-    margin-bottom: 2px; /* Spațiu mic între numele rețelei și numărul de followeri */
+    font-weight: bold;
 }
 
-/* Stil pentru numărul de followeri */
-.followers-count {
-    font-size: 18px;
-    color: #8282ee; /* Poți schimba culoarea în funcție de tema dashboard-ului */
+
+.slider:before {
+    position: absolute;
+    content: "OFF";
+    /* Text implicit */
+    height: 22px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
 }
 
+input:checked+.slider {
+    background-color: #7c71b6;
+}
+
+input:checked+.slider:before {
+    transform: translateX(24px);
+    content: "ON";
+}
+
+/* Add ON/OFF text next to the switches */
+.switch {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.switch .on-off-text {
+    color: #666;
+    font-size: 14px;
+}
+
+.switch .container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Buttons */
+.save-button,
+.cancel-button {
+    width: 48%;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-button {
+    background-color: #8282ee;
+    color: white;
+    border: none;
+}
+
+.cancel-button {
+    background-color: gray;
+    color: #324561;
+    border: none;
+}
+
+.button-group {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
 
 /* Message User */
 .message-user {
-    width: 100%;
-    background-color: #ececec;
+    grid-row: 8;
     padding: 20px;
-    grid-column: 1;
-    grid-row:6; 
+
 }
 
 .message-user h2 {
@@ -501,495 +674,220 @@ main {
     background-color: #414177;
 }
 
-/* Settings */
+.traffic-widget,
+.daily-traffic,
+.social-stats,
+.mobile-users,
+.new-members,
+.recent-activity,
+.message-user,
 .settings {
     width: 100%;
+    overflow: hidden;
     background-color: #ececec;
     padding: 20px;
-    grid-column: 1 / 3; 
 }
 
-.settings h2 {
-    font-size: 20px;
-    margin-bottom: 15px;
+.daily-traffic, .mobile-users{
+    padding:37px;
 }
 
-/* Align label and toggle switch */
-.settings label {
-    display: flex;
-    align-items: center; /* Aligns items vertically */
-    justify-content: flex-start; /* Ensures text and switch are aligned next to each other */
-    margin-bottom: 15px;
-    font-size: 18px;
-    width: 100%; /* Full width label */
+.social-stats{
+    display:grid;
 }
 
-/* This ensures the text appears next to the switch */
-.settings label span {
-    margin-left: 10px; /* Add space between switch and text */
-}
-
-
-.settings select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid lightgrey;
-    font-size: 16px;
-}
-
-
-
-.setting-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.setting-item span {
-    font-size: 16px;
-    color: #333;
-}
-
-select {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    margin-bottom: 20px;
-}
-
-.switch {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-.switch span {
-    font-size: 16px;
-    color: #333;
-}
-
-.container {
-    display: inline-block;
-    position: relative;
-    width: 60px;
-    height: 34px;
-}
-
-.container input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.4s;
-    border-radius: 34px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 22px;
-    width: 20px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: 0.4s;
-    border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-color: #7c71b6;
-}
-
-input:checked + .slider:before {
-    transform: translateX(24px);
-}
-
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
-}
-
-/* Recent Activity Section */
-.recent-activity {
-    width:100%;
-    background-color: #ececec;
-    padding: 20px;
-    grid-column: 1 / -1; /* Make it span full width on smaller screens */
-}
-
-.recent-activity h2 {
-    font-size: 20px;
-    margin-bottom: 15px;
-}
-
-.recent-activity ul {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.recent-activity ul li {
-    display: flex;
-    flex-direction: row;
-    flex-grow:1;
-    align-items: center;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #ccc;
-}
-
-.recent-activity ul li img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 15px;
-}
-
-.recent-activity ul li:last-child{
+.new-members ul li:last-child,
+.recent-activity ul li:last-child {
     border-bottom: none;
 }
 
-.activity-details {
-    display: flex;
-    flex-wrap: wrap;
-    gap:5px;
-    align-items: center;
+/* Adjust button layout in the traffic widget for smaller screens */
+@media screen and (max-width: 320px) {
+    h2{
+        flex-grow: 1;
+    }
+    .time-buttons {
+        flex-wrap: wrap; /* Allow wrapping */
+        flex-grow: 1;
+        justify-content: left; /* Center buttons when wrapping */
+        gap: 2px; /* Reduce gap between buttons */
+    }
+
+    .time-buttons button {
+        padding: 3px 7px; /* Reduce padding for smaller screens */
+        font-size: 10px; /* Smaller font size */
+    }
+
+    /* Adjust chart padding and size for smaller screens */
+    .traffic-widget, .daily-traffic, .mobile-users {
+        padding: 3px;
+    }
+
+    .traffic-chart, .daily-traffic canvas, .mobile-users canvas {
+        height: auto; /* Make canvas responsive */
+        width: 100%; /* Full width */
+    }
 }
 
-.activity-member,
-.activity-action,
-.activity-topic {
-    font-size: 14px;
-    display: inline-block;
-    white-space: nowrap;
-}
-.activity-topic{
-    font-weight: bold;
-}
 
-.activity-time {
-    flex-basis:100% ;
-    white-space: nowrap;
-    font-size: 12px;
-    color: #999;
-    margin-top: 5px;
-}
-
-/* Add hover effect on recent activity rows */
-.recent-activity ul li:hover {
-    background-color: #f4f4f4;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-/* Container pentru alinierea butoanelor */
-.button-group {
-    display: flex;
-    justify-content: space-between; /* Spațiu între butoane */
-    margin-top: 15px; /* Spațiu între select și butoane */
-}
-
-.save-button, .cancel-button {
-    width: 48%; /* Ambele butoane ocupă 48% din lățimea containerului pentru spațiu între ele */
-}
-
-.save-button {
-    padding: 10px 20px;
-    background-color: #8282ee;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.cancel-button {
-    padding: 10px 20px;
-    background-color: gray;
-    color:  #324561;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* MEDIA QUERIES */
-
-/* 320px - 768px */
-@media screen and (min-width:320px) and (max-width:767px) {
-    body {
-        display: grid;
-        grid-template-columns: 1fr; /* O singură coloană */
-        grid-template-rows: auto auto 1fr; /* Header, nav, conținut */
-        grid-template-areas: 
-            "header"
-            "nav"
-            "main";
-        height: 100vh; /* Înălțimea completă a viewportului */
+/* 768px - 1023px */
+@media screen and (min-width:768px) {
+    * {
+        box-sizing: border-box;
         margin: 0;
-    }
-    
-    nav {
-        grid-area: nav;
-        background-color: #414177;
-        display: flex; /* Schimbă layout-ul pe orizontală */
-        justify-content: space-around; /* Distribuie itemii uniform */
-        align-items: center;
-        height: 60px; /* Înălțimea barei de navigare */
         padding: 0;
-    }
-    
-    nav ul {
-        display: flex; /* Itemii să fie afișați pe orizontală */
-        justify-content: space-around;
-        width: 100%; /* Lățimea completă a barei de navigare */
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    nav ul li {
-        margin-bottom: 0; /* Elimină spațiul vertical */
-    }
-
-    nav ul li img {
-        width: 24px; /* Ajustează dimensiunea iconițelor */
-        height: 24px;
-    }
-
-    .facebook, .instagram, .twitter{
-        grid-column: 1/ -1;
-        width:100%;
-    }
-    
-    .new-members ul li,
-    .recent-activity ul li {
-        flex-direction: column; /* Stack elements vertically */
-        align-items: center; /* Center content horizontally */
-        text-align: center;
-    }
-
-    /* Ensure the member name, email, and date are centered */
-    .member-details,
-    .activity-details {
-        text-align: center; /* Center text */
-    }
-
-    /* Remove unnecessary margins or paddings */
-    .new-members ul li img,
-    .recent-activity ul li img {
-        margin-bottom: 10px;
-    }
-
-    .member-date,
-    .activity-time {
-        display: block;
-        margin-top: 5px;
-        font-size: 0.9em;
-        color: gray; /* Optional styling for the date/time */
-    }
-
-    .activity-details{
-        display: flex;
-    }
-    
-    .act{
-        flex-basis: 100%;
-        overflow: auto;
-        text-align: center;
-    }
-    
-    .activity-time{
-        flex-basis: 100%;
-        text-align: center;
-    }
-
-    /* Ajustări pentru widgeturi */
-    .traffic-widget, 
-    .daily-traffic,
-    .mobile-users,
-    .social-stats,
-    .new-members,
-    .recent-activity,
-    .settings,
-    .message-user {
-        grid-column: 1 / -1;
-        margin-bottom: 20px; /* Spațiu între widgeturi */
-    }
-
-    .settings {
-        grid-column: 1 / -1; /* Asigură-te că se aliniază corect */
-        margin-bottom: 20px;
-    }
-
-    .message-user{
-        grid-row:8;
-    }
-
-}
-
-/* Peste 1024px */
-@media screen and (min-width:768px) and (max-width:1023px) {
-    .activity-time {
-        flex-basis: 100%;
+        font-family: 'Martel Sans', sans-serif;
     }
 
     body {
         display: grid;
-        grid-template-columns: 70px auto; /* Bara de navigare pe 70px, restul pentru conținut */
+        grid-template-columns: 70px auto;
         grid-template-rows: auto 1fr;
-        grid-template-areas: 
-            "header header"
+        grid-template-areas:
+            "header header "
             "nav main";
-        height: 100vh; /* Înălțimea completă a viewportului */
+        height: 100vh;
         margin: 0;
     }
 
-    /* Bara de navigare */
-    nav {
+    nav ul {
         grid-area: nav;
-        background-color: #414177;
         display: flex;
-        flex-direction: column; /* Setează direcția pe verticală */
+        flex-direction: column;
+        /* Schimbă layout-ul pe verticală */
+        justify-content: flex-start;
+        /* Alinează elementele de la început */
         align-items: center;
+        /* Alinează elementele pe orizontală la centru */
+        width: 100%;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        height: 100vh;
         padding-top: 20px;
-        height: 100vh; /* Face bara laterală să se întindă pe toată înălțimea paginii */
     }
+
 
     nav ul {
         list-style-type: none;
         padding: 0;
         margin: 0;
-        width: 100%; 
+        width: 100%;
     }
+
+
+    .new-members ul, .recent-activity ul {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .new-members ul li, .recent-activity ul li {
+        display: flex;
+        flex-direction: row;
+        align-items: left;
+        flex-grow: 1;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .act, .activity-details, .member-details{
+        text-align: left;
+        margin-left: 10px;
+    }
+
+    .member-details {
+        flex-grow: 1;
+    }
+    
+    
+    .member-email {
+        display: block;
+    }
+
+    .activity-time{
+        margin-left: 10px;
+    }
+
 
     nav ul li {
         margin-bottom: 20px;
-        text-align: center;
     }
 
-    nav ul li img {
-        width: 30px; 
-        height: 30px;
+    .dashboard-content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
     }
-    body{
-        width:100%;
-        overflow: auto;
-    }
-   
-    .traffic-widget, 
+
+    .traffic-widget,
     .social-stats,
     .new-members,
     .recent-activity,
-    .message-user, 
-    .settings  {
-        grid-column: 1 / -1; 
+    .message-user,
+    .settings {
+        grid-column: 1 / -1;
     }
 
     .daily-traffic {
-        grid-column: 1 ; 
+        grid-column: 1;
     }
- 
-    .mobile-users {
-        grid-column: 2; 
-    }
-    .message-user{
-        grid-row:7;
-    }
-    
-}
 
+    .mobile-users {
+        grid-column: 2;
+    }
+
+    .message-user {
+        grid-row: 7;
+    }
+
+    .social-stats{
+        grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
+        gap: 20px; /* Space between the columns */
+        align-items: left;
+    }
+}
 
 /* Peste 1024px */
 @media screen and (min-width:1024px) {
-    .activity-time {
-        display: block; /* Forces .activity-time to move below the others */
-        margin-top: 5px; /* Optional: adds some space above the time */
-        font-size: 0.9em; /* Adjust font size if needed */
-        color: gray; /* Optional: different color for the time */
+
+    .alert {
+        width: 100%;
     }
 
-    body {
-        display: grid;
-        grid-template-columns: 70px auto; /* Bara de navigare pe 70px, restul pentru conținut */
-        grid-template-rows: auto 1fr;
-        grid-template-areas: 
-            "header header"
-            "nav main";
-        height: 100vh; /* Înălțimea completă a viewportului */
-        margin: 0;
+    .traffic-widget{
+        height:450px;
     }
 
-    /* Bara de navigare */
-    nav {
-        grid-area: nav;
-        background-color: #414177;
-        display: flex;
-        flex-direction: column; /* Setează direcția pe verticală */
-        align-items: center;
-        padding-top: 20px;
-        height: 100vh; /* Face bara laterală să se întindă pe toată înălțimea paginii */
+    .traffic-chart{
+        height:390px;
     }
 
-    nav ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-        width: 100%; /* Asigură că lista ocupă întreaga lățime */
-    }
-
-    nav ul li {
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    nav ul li img {
-        width: 30px; /* Ajustează dimensiunea iconițelor */
-        height: 30px;
-    }
-
-    /* Ajustări pentru widgeturi */
-    .traffic-widget, 
+    .traffic-widget,
     .social-stats {
-        grid-column: 1 / -1; /* Widgeturile principale ocupă toată lățimea */
+        grid-column: 1 / -1;
     }
 
-    .daily-traffic, 
-    .new-members, 
+    .daily-traffic,
+    .new-members,
     .message-user {
-        grid-column: 1 / 2; /* Widgeturi în coloana din stânga */
+        grid-column: 1 / 2;
     }
 
-    .recent-activity, 
-    .settings, 
+    .recent-activity,
+    .settings,
     .mobile-users {
-        grid-column: 2 / 3; /* Widgeturi în coloana din dreapta */
+        grid-column: 2 / 3;
     }
 
-    .message-user, 
+    .message-user,
     .settings {
-        grid-row:6; /* Mesajele și setările ocupă ambele coloane */
+        grid-row: 6;
     }
+
+ 
 }
