@@ -254,3 +254,15 @@ document.getElementById("messageForm").addEventListener("submit", function(event
         document.getElementById("messageForm").reset();
     }
 });
+
+
+document.querySelectorAll('.slideButton').forEach(slider => {
+    slider.addEventListener('change', function () {
+        const onOffText = this.parentElement.querySelector('.on-off-text');
+        if (this.checked) {
+            onOffText.textContent = 'ON';
+        } else {
+            onOffText.textContent = 'OFF';
+        }
+    });
+});
