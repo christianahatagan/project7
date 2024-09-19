@@ -75,6 +75,7 @@ header {
     width: 24px;
     height: 24px;
     cursor: pointer;
+    fill: #ccc;
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
@@ -187,6 +188,7 @@ nav ul li {
 }
 
 nav ul li svg {
+    fill: #ccc;
     width: 40px;
     /* Ajustat la dimensiuni mai mici */
     height: 40px;
@@ -333,11 +335,10 @@ nav ul li svg {
 
 .social-box {
     display: flex;
-    align-items: left;
     flex:1;
-    justify-content: center;
+    justify-content: left;
     font-size: 18px;
-    padding: 10px;
+    padding: 20px;
     background-color: white;
     border-radius: 5px;
 }
@@ -348,18 +349,21 @@ nav ul li svg {
 }
 
 .social-name {
+    margin-top:10px;
+    margin-left:3px;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 20px;
     color: #333;
 }
 
 .followers-count {
-    font-size: 34px;
+    margin-left:3px;
+    font-size: 40px;
     color: #8282ee;
 }
 .icon-circle {
-    width: 50px; /* Setează dimensiunea cercului */
-    height: 50px; /* Setează dimensiunea cercului */
+    width: 70px; /* Setează dimensiunea cercului */
+    height: 70px; /* Setează dimensiunea cercului */
     background-color: #414177; /* Fundalul cercului (opțional) */
     display: flex;
     justify-content: center;
@@ -368,8 +372,8 @@ nav ul li svg {
 }
 
 .icon-circle svg {
-    width: 24px; /* Dimensiunea SVG-ului */
-    height: 24px; /* Dimensiunea SVG-ului */
+    width: 40px; /* Dimensiunea SVG-ului */
+    height: 40px; /* Dimensiunea SVG-ului */
     fill: white; /* Culoarea SVG-ului (poate fi modificată) */
 }
 
@@ -407,7 +411,11 @@ nav ul li svg {
 .member-details {
     flex-grow: 1;
     text-align: center;
-    /* Aliniere centrală */
+}
+
+.member-name,
+.member-email {
+    display: block; /* Pe linii diferite implicit */
 }
 
 .member-name {
@@ -457,6 +465,18 @@ nav ul li svg {
     margin-bottom: 15px;
 }
 
+.recent-activity ul li::after {
+    content: '\003e'; /* Unicode for the ">" symbol */
+    font-size: 16px;
+    color: #8282ee; /* You can change this color if needed */
+    display: none; /* Hidden by default */
+    margin-left: 10px; /* Add space between text and arrow */
+    position: absolute; /* Position it at the right */
+    right: 10px; /* Align to the right of the card */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .recent-activity img {
     width: 40px;
     height: 40px;
@@ -502,27 +522,33 @@ nav ul li svg {
 }
 
 /* Settings Section */
+.settings {
+    display: grid;
+    grid-template-columns: 1fr 190px; /* Two columns: text and slider */
+    grid-gap: 20px; /* Gap between items */
+    align-items: center;
+}
+
 .settings h2 {
     font-size: 20px;
     margin-bottom: 15px;
 }
+.settings .container{
+    grid-column: 2;
+    justify-self: start;
+}
 
 .settings label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    font-size: 18px;
+    display: contents;
     width: 100%;
 }
 
 .settings label span {
-    margin-left: 10px;
-    /* Add space between switch and text */
+    grid-column: 1;
 }
 
 .settings select {
-    width: 100%;
+    grid-column: 1/-1;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid lightgrey;
@@ -542,7 +568,8 @@ nav ul li svg {
 }
 
 .slider {
-    width: 60px;
+    grid-column: 2;
+    width: 80px;
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -571,6 +598,9 @@ nav ul li svg {
     background-color: white;
     transition: 0.4s;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 input:checked+.slider {
@@ -623,7 +653,7 @@ input:checked+.slider:before {
 }
 
 .button-group {
-    padding: 10px 20px;
+    grid-column: 1 / -1;
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
@@ -652,7 +682,7 @@ input:checked+.slider:before {
 
 .message-textarea {
     width: 100%;
-    height: 100px;
+    height: 130px;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -661,6 +691,7 @@ input:checked+.slider:before {
 }
 
 .send-button {
+    margin-top: 20px;
     width: 100%;
     padding: 10px 20px;
     background-color: #8282ee;
@@ -701,8 +732,7 @@ input:checked+.slider:before {
     border-bottom: none;
 }
 
-/* Adjust button layout in the traffic widget for smaller screens */
-@media screen and (max-width: 320px) {
+
     h2{
         flex-grow: 1;
     }
@@ -718,16 +748,12 @@ input:checked+.slider:before {
         font-size: 10px; /* Smaller font size */
     }
 
-    /* Adjust chart padding and size for smaller screens */
-    .traffic-widget, .daily-traffic, .mobile-users {
-        padding: 3px;
-    }
+
 
     .traffic-chart, .daily-traffic canvas, .mobile-users canvas {
         height: auto; /* Make canvas responsive */
         width: 100%; /* Full width */
     }
-}
 
 
 /* 768px - 1023px */
@@ -750,6 +776,13 @@ input:checked+.slider:before {
         margin: 0;
     }
 
+    .recent-activity ul li {
+        position: relative;
+    }
+
+    .recent-activity ul li::after {
+        display: inline-block; /* Show the arrow */
+    }
     nav ul {
         grid-area: nav;
         display: flex;
@@ -775,6 +808,21 @@ input:checked+.slider:before {
         width: 100%;
     }
 
+    .time-buttons {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        gap: 10px;
+    }
+    
+    .time-buttons button {
+        color: black;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
     .new-members ul, .recent-activity ul {
         display: flex;
@@ -849,6 +897,10 @@ input:checked+.slider:before {
         grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
         gap: 20px; /* Space between the columns */
         align-items: left;
+    }
+
+    .settings{
+        grid-template-columns: 1fr 400px;
     }
 }
 
