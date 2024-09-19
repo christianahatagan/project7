@@ -524,7 +524,7 @@ nav ul li svg {
 /* Settings Section */
 .settings {
     display: grid;
-    grid-template-columns: 1fr 190px; /* Two columns: text and slider */
+    grid-template-columns: 1fr 70px; /* Two columns: text and slider */
     grid-gap: 20px; /* Gap between items */
     align-items: center;
 }
@@ -566,48 +566,81 @@ nav ul li svg {
     width: 0;
     height: 0;
 }
+.switch {
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    position: relative;
+}
+
+.container {
+    position: relative;
+}
+
+.slideButton {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
 
 .slider {
-    grid-column: 2;
-    width: 80px;
+
     position: absolute;
     cursor: pointer;
+    width: 76px;
     top: 0;
+    left: 0;
     right: 0;
     bottom: 0;
     background-color: #ccc;
-    transition: 0.4s;
+    transition: .4s;
     border-radius: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
 }
-
 
 .slider:before {
     position: absolute;
-    content: "OFF";
-    /* Text implicit */
-    height: 30px;
-    width: 30px;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
     background-color: white;
-    transition: 0.4s;
+    transition: .4s;
     border-radius: 50%;
     display: flex;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: center;
 }
 
-input:checked+.slider {
-    background-color: #7c71b6;
+.on-off-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 12px;
+    font-weight: bold;
+    pointer-events: none;
 }
 
-input:checked+.slider:before {
-    transform: translateX(24px);
-    content: "ON";
+.slideButton:checked + .slider {
+    background-color: #6f6fd3;
 }
+
+.slideButton:checked + .slider:before {
+    transform: translateX(42px); /* Ajustează translatarea pentru a ajunge la capăt */
+}
+.slideButton:checked + .slider:before .on-off-text {
+    content: "ON"; /* Schimbă textul */
+}
+
+.slider:before .on-off-text {
+    content: "OFF"; /* Text inițial */
+}
+
+
+
+
 
 /* Buttons */
 .save-button,
