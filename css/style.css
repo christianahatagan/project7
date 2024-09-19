@@ -609,25 +609,6 @@ input:checked+.slider:before {
     content: "ON";
 }
 
-/* Add ON/OFF text next to the switches */
-.switch {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-}
-
-.switch .on-off-text {
-    color: #666;
-    font-size: 14px;
-}
-
-.switch .container {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
 /* Buttons */
 .save-button,
 .cancel-button {
@@ -773,6 +754,9 @@ input:checked+.slider:before {
         margin: 0;
     }
 
+    .time-buttons button{
+        font-size:15px;
+    }
     .recent-activity ul li {
         position: relative;
     }
@@ -903,7 +887,9 @@ input:checked+.slider:before {
 
 /* Peste 1024px */
 @media screen and (min-width:1024px) {
-
+    .settings {
+        grid-template-columns: repeat(2,1fr);
+    }
     .alert {
         width: 100%;
     }
